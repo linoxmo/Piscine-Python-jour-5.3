@@ -1,4 +1,4 @@
-from enum import Enum 
+from enum import Enum
 from pydantic import BaseModel, Field, model_validator, ValidationError
 from datetime import datetime
 from typing import Optional
@@ -8,18 +8,18 @@ class ContactType(Enum):
     Radio = "radio"
     Visual = "visual"
     Physical = "physical"
-    Telepathic = "telepathic" 
+    Telepathic = "telepathic"
 
 
 class AlienContact(BaseModel):
-    contact_id: str = Field(min_length = 5, max_length=15)
+    contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime
-    location: str = Field(min_length=3, max_length = 100) 
+    location: str = Field(min_length=3, max_length=100)
     contact_type: ContactType
-    signal_strength:  float = Field(ge = 0.0, le=10.0)
-    duration_minutes: int = Field(ge = 1, le = 60 * 24)
-    witness_count: int = Field(ge = 1, le = 100)
-    message_received: Optional[str] = Field(default=None, max_length = 500)
+    signal_strength:  float = Field(ge=0.0, le=10.0)
+    duration_minutes: int = Field(ge=1, le=60 * 24)
+    witness_count: int = Field(ge=1, le=100)
+    message_received: Optional[str] = Field(default=None, max_length=500)
     is_verified: bool = False
 
     @model_validator(mode="after")
@@ -54,14 +54,14 @@ class AlienContact(BaseModel):
             )
 
         return self
-    
-    
+
+
 def main() -> None:
     print("Alien Contact Log Validation")
     print("======================================")
     valid_contact = AlienContact(
         contact_id="AC_2024_001",
-        timestamp= datetime.now(),
+        timestamp=datetime.now(),
         location="Area 51, Nevada",
         contact_type=ContactType.Radio,
         signal_strength=8.5,
@@ -69,7 +69,7 @@ def main() -> None:
         witness_count=5,
         message_received="Greetings from Zeta Reticuli",
         is_verified=False
-        )
+    )
 
     print("Valid contact report:")
     print(f"ID: {valid_contact.contact_id}")
@@ -83,7 +83,7 @@ def main() -> None:
     try:
         AlienContact(
             contact_id="AC_2024_002",
-            timestamp= datetime.now(),
+            timestamp=datetime.now(),
             location="Nevada Desert",
             contact_type=ContactType.Telepathic,
             signal_strength=5.0,
